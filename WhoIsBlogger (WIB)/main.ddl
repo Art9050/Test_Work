@@ -1,6 +1,6 @@
 create table Users(
     userId serial not null primary key, 
-    age date
+    age varchar(10)
     );
 	
 create table Items (
