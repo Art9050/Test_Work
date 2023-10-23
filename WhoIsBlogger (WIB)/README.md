@@ -1,3 +1,5 @@
+Тестовое для вакансий компании [WhoIsBlogger (WIB)](https://togliatti.hh.ru/employer/4531474?hhtmFrom=main) на должности Junior Data Analyst / Data Analyst и Junior Data Engineer
+
 SQL  
 ---
 [Решение](https://github.com/Art9050/Test_Work/blob/main/WhoIsBlogger%20(WIB)/main.sql)
