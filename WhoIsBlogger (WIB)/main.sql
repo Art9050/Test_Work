@@ -70,5 +70,26 @@ Where sum_price in (
 /*
 В) какой товар обеспечивает дает наибольший вклад в выручку за последний год 
 
+В) какой товар обеспечивает дает наибольший вклад в выручку за последний гоl
+
+оконка
+группировка по году по товару
+
+SUM(price) OVER(PARTITION BY Date) AS 'Sum' 
+
+select 
+	purchaseId,
+	EXTRACT(YEAR FROM dtd) as yr_order,
+	price
+from purchases
+left JOIN items
+on purchases.itemId = items.itemId
+
+
+
+Where EXTRACT(YEAR FROM dtd) = EXTRACT(YEAR FROM(Now()))
+*/
+
+/*
 Г) топ-3 товаров по выручке и их доля в общей выручке за любой год
 */
