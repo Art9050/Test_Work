@@ -71,7 +71,7 @@ Where sum_price in (
 В) какой товар обеспечивает дает наибольший вклад в выручку за последний год 
 */
 
-Select itemId from(
+WITH orders AS (
 	select ---работает
 		purchases.itemId as itemId,
 		sum(price) as s_price
@@ -80,20 +80,15 @@ Select itemId from(
 	on purchases.itemId = items.itemId
 	Where EXTRACT(YEAR FROM dtd) = '2022'---EXTRACT(YEAR FROM(Now()))
 	group by purchases.itemId
-) as c
-Where s_price = 
+	)
+
+Select 
+	itemId 
+from orders
+Where s_price = ( 
 	Select ---работает
 		max(s_price) 
-	from (
-		select 
-			purchases.itemId,
-			sum(price) as s_price
-		from purchases
-		left JOIN items
-		on purchases.itemId = items.itemId
-		Where EXTRACT(YEAR FROM dtd) = '2022'---EXTRACT(YEAR FROM(Now()))
-		group by purchases.itemId
-	  ) as a 
+	from orders) 
 
 /*
 Г) топ-3 товаров по выручке и их доля в общей выручке за любой год
