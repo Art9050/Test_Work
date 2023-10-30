@@ -97,7 +97,6 @@ Where s_price = (
 --сумма за товар / Сумма за все товары * 100
 */
 
----Допилить
 WITH orders AS (
 	select ---выручка за товар за год
 		purchases.itemId as itemId,
@@ -110,8 +109,9 @@ WITH orders AS (
 	)
 
 select 
-	*,
-	--впихнуть подзапрос что считал бы колличество в зависимости от товара
+	itemId,
+	(select s_price from orders as ord where ord.itemId = orders.itemId) /	
+	(select sum(s_price) from orders) * 100 as piece_of_revenue
 from orders
 where itemId IN 	
 	(
@@ -125,4 +125,3 @@ where itemId IN
 	where my_rank <= 3
 	order by my_rank
 	)
-
