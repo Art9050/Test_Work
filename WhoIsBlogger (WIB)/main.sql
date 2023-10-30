@@ -92,4 +92,30 @@ Where s_price = (
 
 /*
 Г) топ-3 товаров по выручке и их доля в общей выручке за любой год
+
+--s_price / sum(s_price) * 100
+--сумма за товар / Сумма за все товары * 100
 */
+
+---Допилить
+WITH orders AS (
+	select ---выручка за товар за год
+		purchases.itemId as itemId,
+		sum(price) as s_price
+	from purchases
+	left JOIN items
+	on purchases.itemId = items.itemId
+	Where EXTRACT(YEAR FROM dtd) = '2022'---EXTRACT(YEAR FROM(Now()))
+	group by purchases.itemId
+	)
+    
+select
+  *
+from
+  (select DISTINCT
+     *,
+     rank() over (order by s_price desc) as my_rank
+  from orders) subquery
+where my_rank <= 3
+order by my_rank
+
