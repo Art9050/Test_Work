@@ -108,14 +108,21 @@ WITH orders AS (
 	Where EXTRACT(YEAR FROM dtd) = '2022'---EXTRACT(YEAR FROM(Now()))
 	group by purchases.itemId
 	)
-    
-select
-  *
-from
-  (select DISTINCT
-     *,
-     rank() over (order by s_price desc) as my_rank
-  from orders) subquery
-where my_rank <= 3
-order by my_rank
+
+select 
+	*,
+	--впихнуть подзапрос что считал бы колличество в зависимости от товара
+from orders
+where itemId IN 	
+	(
+	select
+		itemId
+	from
+	  (select DISTINCT
+		 *,
+		 rank() over (order by s_price desc) as my_rank
+	  from orders) subquery
+	where my_rank <= 3
+	order by my_rank
+	)
 
